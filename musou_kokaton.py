@@ -288,7 +288,7 @@ def main():
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beams.add(Beam(bird))
            
-            if event.type == pg.KEYDOWN and event.key == pg.K_TAB:
+            if event.type == pg.KEYDOWN and event.key == pg.K_TAB and score.score > 50:
                 if score.score > -100:
                     gras.add(Gravity(bird,200, 500))       
                 
