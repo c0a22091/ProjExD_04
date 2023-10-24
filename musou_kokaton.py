@@ -285,6 +285,12 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return 0
+            if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
+                bird.speed = 20  # 左シフトが押されたら速度を20に設定
+
+            if event.type == pg.KEYUP and event.key == pg.K_LSHIFT:
+                bird.speed = 10  # 左シフトが離されたら速度を10に戻す
+
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beams.add(Beam(bird))
            
