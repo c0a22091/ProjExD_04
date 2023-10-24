@@ -240,11 +240,7 @@ class Enemy(pg.sprite.Sprite):
             self.state = "stop"
         self.rect.centery += self.vy
 
-C0B22001/feature3
-        C0B22001/feature3
 
-C0B22001/feature1
-main
 class Gravity(pg.sprite.Sprite):
     def __init__(self, bird: Bird, size:int, life: int):
         super().__init__()
@@ -261,7 +257,6 @@ class Gravity(pg.sprite.Sprite):
         if self.life < 0:
             self.kill()
 
- main
 
 class Score:
     """
@@ -286,19 +281,7 @@ class Score:
     def update(self, screen: pg.Surface):
         self.image = self.font.render(f"Score: {self.score}", 0, self.color)
         screen.blit(self.image, self.rect)
-C0B22001/feature3
- C0B22001/feature3
 
- C0B22001/feature1
-main
-        
-              
-
-
-C0B22001/feature3
- main
-
-C0A22055/feature2
 class NeoGravity(pg.sprite.Sprite):
 
     def __init__(self, life):
@@ -316,10 +299,6 @@ class NeoGravity(pg.sprite.Sprite):
 
 
 
-main
-main
- main
-
 def main():
     pg.display.set_caption("真！こうかとん無双")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -331,22 +310,18 @@ def main():
     beams = pg.sprite.Group()
     exps = pg.sprite.Group()
     emys = pg.sprite.Group()
- C0A22055/feature2
     neo_gravities = pg.sprite.Group()
     neo_gravity_active = False
 
-C0B22001/feature3
-C0B22001/feature3
+
+
     gras = pg.sprite.Group()
 
- main
 
-C0B22001/feature1
+
     gras = pg.sprite.Group()
 
-main
-main
-main
+
 
     tmr = 0
     clock = pg.time.Clock()
@@ -355,11 +330,7 @@ main
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return 0
-C0B22001/feature3
- C0B22001/feature3
 
-C0B22001/feature1
-main
             if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
                 bird.speed = 20  # 左シフトが押されたら速度を20に設定
 
@@ -368,7 +339,7 @@ main
 
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beams.add(Beam(bird))
-C0A22055/feature2
+
             if event.type == pg.KEYDOWN and event.key == pg.K_RETURN:
                 if score.score >= 200: 
                     neo_gravities.add(NeoGravity(400))
@@ -383,18 +354,13 @@ C0A22055/feature2
 
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beams.add(Beam(bird))
-C0B22001/feature3
- main
 
-                C0B22001/feature1
-main
+ 
 
             if event.type == pg.KEYDOWN and event.key == pg.K_RSHIFT and score.score >= 100:
                 bird.change_state("hyper", 500)
                 score.score -= 100
-main
-main
-main
+
         screen.blit(bg_img, [0, 0])
 
         if tmr%200 == 0:  # 200フレームに1回，敵機を出現させる
@@ -414,27 +380,16 @@ main
             exps.add(Explosion(bomb, 50))  # 爆発エフェクト
             score.score_up(1)  # 1点アップ
 
-C0B22001/feature3
-C0B22001/feature3
 
-C0B22001/feature1
-C0B22001/feature1
-main
         for bomb in pg.sprite.groupcollide(bombs, gras, True, False).keys():
             exps.add(Explosion(bomb, 50))  # 爆発エフェクト
             score.score_up(1)  # 1点アップ
-
-C0B22001/feature3
-
- main
 
         if bird.get_state() == "hyper":
             for bomb in pg.sprite.spritecollide(bird, bombs, True):
                 exps.add(Explosion(bomb, 50))  # 爆発エフェクト
                 score.score_up(1)  # 10点アップ
-main
 
-main
         if len(pg.sprite.spritecollide(bird, bombs, True)) != 0:
             bird.change_img(8, screen) # こうかとん悲しみエフェクト
             score.update(screen)
@@ -462,15 +417,11 @@ main
         bombs.draw(screen)
         exps.update()
         exps.draw(screen)
-C0B22001/feature3
- C0B22001/feature3
 
- C0B22001/feature1
-main
         gras.update()
         gras.draw(screen)
 
- main
+ 
         score.update(screen)
         neo_gravities.update()
         neo_gravities.draw(screen)
