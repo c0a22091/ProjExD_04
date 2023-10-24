@@ -240,6 +240,24 @@ class Enemy(pg.sprite.Sprite):
             self.state = "stop"
         self.rect.centery += self.vy
 
+C0B22001/feature1
+class Gravity(pg.sprite.Sprite):
+    def __init__(self, bird: Bird, size:int, life: int):
+        super().__init__()
+        self.image = pg.Surface((2 * size, 2* size))
+        pg.draw.circle(self.image, (10, 10, 10), (size, size), size)
+        self.image.set_alpha(180)
+        self.image.set_colorkey((0, 0, 0))
+        self.rect = self.image.get_rect()
+        self.rect.center = bird.rect.center
+        self.life = life
+        
+    def update(self):
+        self.life -= 1
+        if self.life < 0:
+            self.kill()
+
+ main
 
 class Score:
     """
@@ -264,7 +282,12 @@ class Score:
     def update(self, screen: pg.Surface):
         self.image = self.font.render(f"Score: {self.score}", 0, self.color)
         screen.blit(self.image, self.rect)
+ C0B22001/feature1
+        
+              
 
+
+main
 
 def main():
     pg.display.set_caption("真！こうかとん無双")
@@ -277,6 +300,10 @@ def main():
     beams = pg.sprite.Group()
     exps = pg.sprite.Group()
     emys = pg.sprite.Group()
+C0B22001/feature1
+    gras = pg.sprite.Group()
+
+main
 
     tmr = 0
     clock = pg.time.Clock()
@@ -285,11 +312,30 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return 0
+C0B22001/feature1
+            if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
+                bird.speed = 20  # 左シフトが押されたら速度を20に設定
+
+            if event.type == pg.KEYUP and event.key == pg.K_LSHIFT:
+                bird.speed = 10  # 左シフトが離されたら速度を10に戻す
+
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beams.add(Beam(bird))
+           
+            if event.type == pg.KEYDOWN and event.key == pg.K_TAB and score.score > 50:
+                if score.score > -100:
+                    gras.add(Gravity(bird,200, 500))       
+                
+
+            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                beams.add(Beam(bird))
+                C0B22001/feature1
+main
+
             if event.type == pg.KEYDOWN and event.key == pg.K_RSHIFT and score.score >= 100:
                 bird.change_state("hyper", 500)
                 score.score -= 100
+main
         screen.blit(bg_img, [0, 0])
 
         if tmr%200 == 0:  # 200フレームに1回，敵機を出現させる
@@ -309,11 +355,20 @@ def main():
             exps.add(Explosion(bomb, 50))  # 爆発エフェクト
             score.score_up(1)  # 1点アップ
 
+C0B22001/feature1
+C0B22001/feature1
+        for bomb in pg.sprite.groupcollide(bombs, gras, True, False).keys():
+            exps.add(Explosion(bomb, 50))  # 爆発エフェクト
+            score.score_up(1)  # 1点アップ
+
+ main
+
         if bird.get_state() == "hyper":
             for bomb in pg.sprite.spritecollide(bird, bombs, True):
                 exps.add(Explosion(bomb, 50))  # 爆発エフェクト
                 score.score_up(1)  # 10点アップ
 
+main
         if len(pg.sprite.spritecollide(bird, bombs, True)) != 0:
             bird.change_img(8, screen) # こうかとん悲しみエフェクト
             score.update(screen)
@@ -330,6 +385,11 @@ def main():
         bombs.draw(screen)
         exps.update()
         exps.draw(screen)
+ C0B22001/feature1
+        gras.update()
+        gras.draw(screen)
+
+ main
         score.update(screen)
         pg.display.update()
         tmr += 1
