@@ -312,7 +312,7 @@ def main():
         if bird.get_state() == "hyper":
             for bomb in pg.sprite.spritecollide(bird, bombs, True):
                 exps.add(Explosion(bomb, 50))  # 爆発エフェクト
-                score.score_up(10)  # 10点アップ
+                score.score_up(1)  # 10点アップ
 
         if len(pg.sprite.spritecollide(bird, bombs, True)) != 0:
             bird.change_img(8, screen) # こうかとん悲しみエフェクト
