@@ -226,6 +226,7 @@ class Enemy(pg.sprite.Sprite):
             self.state = "stop"
         self.rect.centery += self.vy
 
+        C0B22001/feature3
 class Gravity(pg.sprite.Sprite):
     def __init__(self, bird: Bird, size:int, life: int):
         super().__init__()
@@ -241,6 +242,8 @@ class Gravity(pg.sprite.Sprite):
         self.life -= 1
         if self.life < 0:
             self.kill()
+
+ main
 
 class Score:
     """
@@ -262,8 +265,12 @@ class Score:
     def update(self, screen: pg.Surface):
         self.image = self.font.render(f"Score: {self.score}", 0, self.color)
         screen.blit(self.image, self.rect)
+ C0B22001/feature3
         
               
+
+
+ main
 
 def main():
     pg.display.set_caption("真！こうかとん無双")
@@ -276,7 +283,10 @@ def main():
     beams = pg.sprite.Group()
     exps = pg.sprite.Group()
     emys = pg.sprite.Group()
+C0B22001/feature3
     gras = pg.sprite.Group()
+
+ main
 
     tmr = 0
     clock = pg.time.Clock()
@@ -285,6 +295,7 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return 0
+ C0B22001/feature3
             if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
                 bird.speed = 20  # 左シフトが押されたら速度を20に設定
 
@@ -298,6 +309,10 @@ def main():
                 if score.score > -100:
                     gras.add(Gravity(bird,200, 500))       
                 
+
+            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                beams.add(Beam(bird))
+ main
         screen.blit(bg_img, [0, 0])
 
         if tmr%200 == 0:  # 200フレームに1回，敵機を出現させる
@@ -317,10 +332,13 @@ def main():
             exps.add(Explosion(bomb, 50))  # 爆発エフェクト
             score.score_up(1)  # 1点アップ
 
+C0B22001/feature3
         for bomb in pg.sprite.groupcollide(bombs, gras, True, False).keys():
             exps.add(Explosion(bomb, 50))  # 爆発エフェクト
             score.score_up(1)  # 1点アップ
 
+
+main
         if len(pg.sprite.spritecollide(bird, bombs, True)) != 0:
             bird.change_img(8, screen) # こうかとん悲しみエフェクト
             score.update(screen)
@@ -337,8 +355,11 @@ def main():
         bombs.draw(screen)
         exps.update()
         exps.draw(screen)
+ C0B22001/feature3
         gras.update()
         gras.draw(screen)
+
+ main
         score.update(screen)
         pg.display.update()
         tmr += 1
